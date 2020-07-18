@@ -38,3 +38,8 @@ such structure in figure 2 is called **(2 layers neural network)** despite that 
 
 on more thing to mention is that the hidden and the output layers will have parameters (W and b) associated with each of them and the will be indicated as according to the notation of certain layer. for example the hidden layer a^[1] will have the parameters w^[1] and b^[1] and so on. later on we will talk in details about the dimensions of each vector.
 
+
+
+### Computing a Neural Network's Output
+
+#### 
