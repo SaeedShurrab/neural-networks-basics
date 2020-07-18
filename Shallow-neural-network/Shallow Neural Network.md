@@ -16,7 +16,7 @@ as we saw in th last week in logistic regression model  which is built out of si
 
 on the other side, neural network is a stack set of logistic regression units as show figure 1 but there are alternative choices for activation functions to be used other than sigmoid activation.
 
-each unit in the network is responsible for performing two steps of calculations in a single layer which are (Z and a) calculations and the output of the layer act as an input to the next layer until we reach the ultimate unit and compute the loss, such issue requires introducing new notation to indicate the layer, so that we will use superscript squared brackets to indicate certain layer and its calculation such as W^[1],  b^[1], z^[1] and a^[1]  as shown in figure 1. each layer has its own parameters (W and b) and thus, back propagation is then performed with respect to each parameter in the network from the last layer to the first layer.
+each unit in the network is responsible for performing two steps of calculations in a single layer which are (Z and a) calculations and the output of the layer act as an input to the next layer until we reach the ultimate unit and compute the loss, such issue requires introducing new notation to indicate the layer, so that we will use squared brackets to indicate certain layer and its calculation such as W[1],  b[1], z[1] and a[1]  as shown in figure 1. each layer has its own parameters (W and b) and thus, back propagation is then performed with respect to each parameter in the network from the last layer to the first layer.
 
 
 
@@ -32,14 +32,83 @@ figure 2 represents a simple neural network, the first part of the layer is call
 
 
 
-lets introduce more notation,  in logistic regression we were using vector X as input features representative, alternatively, the input feature vector will be represented by a^[0] , the hidden layer will be denoted by a^[1] which will generate the values a^[1]_1,  a^[1]_2, a^[1]3, a^[1]4  and finally, the output layer is called a^[2].
+lets introduce more notation,  in logistic regression we were using vector X as input features representative, alternatively, the input feature vector will be represented by a[0] , the hidden layer will be denoted by a[1] which will generate the values a[1]_1,  a[1]_2, a[1]3, a[1]4  and finally, the output layer is called a[2].
 
 such structure in figure 2 is called **(2 layers neural network)** despite that we have defined 3 layers input hidden and output. the reason behind that is we do not count the input layer as an official layer because it does not have any activation function. 
 
-on more thing to mention is that the hidden and the output layers will have parameters (W and b) associated with each of them and the will be indicated as according to the notation of certain layer. for example the hidden layer a^[1] will have the parameters w^[1] and b^[1] and so on. later on we will talk in details about the dimensions of each vector.
+on more thing to mention is that the hidden and the output layers will have parameters (W and b) associated with each of them and the will be indicated as according to the notation of certain layer. for example the hidden layer a[1] will have the parameters w[1] and b[1] and so on. later on we will talk in details about the dimensions of each vector.
 
 
 
 ### Computing a Neural Network's Output
 
-#### 
+#### The neural network basic computation
+
+![Screenshot from 2020-07-18 10-23-14](/home/sa3eed/Pictures/Screenshot from 2020-07-18 10-23-14.png)
+
+​																				figure (3): What is going on inside the neural network??
+
+In Logistic regression (LHS of figure 3), each single unit performs two steps of calculations including:
+
+```
+z =w^T * x +b			(1)
+a = sigmoid(z)			(2)
+```
+
+The same computation is performed in the neural network but multiple times according to the number of units i the neural network, consider the RHS of figure (3) which represents a shallow neural network with three input variables, single training example, single hidden layer with four units and output layer with single unit, lets dive deeper into the calculation of each unit in the network, we well take the first unit as an example.
+
+Similar to logistic regression,  equation  (1) and (2) are performed in the each unit in the network. bear in mind that the number in the squared brackets represents the layer index while the subscripted number represents the index of the unit in that layer.
+
+```
+for the first unit:
+z[1]_1 = w^T[1]_1 * x + b[1]_1			(1)
+a[1]_1 = sgmoid(z[1]_1)					(2)
+
+for the second unit:
+z[1]_2 = w^T[1]_2 * x + b[1]_2			(3)
+a[1]_2 = sgmoid(z[1]_2)					(4)
+
+for the third unit:
+z[1]_3 = w^T[1]_3 * x + b[1]_3			(5)
+a[1]_3 = sgmoid(z[1]_3)					(6)
+
+for the fourth unit:
+z[1]_4 = w^T[1]_4 * x + b[1]_4			(7)
+a[1]_4 = sgmoid(z[1]_4)					(8)
+```
+
+to perform these computations, you need start a for loop to do all the computation (1-8), but using for loop is not efficient practice with neural networks, so lets vectorize these equations:
+
+```
+for the hidden layer:
+vectorizing the linear equations(1, 3, 5, 7)
+w^T[i]_j is a column vector of shape (1,n) or (1,3) in our example, in vectorized version the weight vectors are stacked together to form a matrix of shape (r[i],n) or (4,3) in our example where (r[i]) represents the number of units in the layers and (n) is the number of input variables, then the weights matrix is multiplied by the input matrix which has the shape (n,1) or (3,1) in our case, ultimately, the bias vector of shape (r[1],1) to produce a row vector contains the Z's values with shape of (r[1],1) or (4,1) in our case. 
+	(r[1],1)			  (r[1],n)		(n,1)		  (r[1],1)	
+    (4,1)				  (4,3)			(3,1)		  (4,1)
+	Z[1]			=	  W[1]		*	  x 		  b[1]
+z[1] = 	[z[1]_1, 	=	[w^T[1]_1,	*	[x_1,	+	[b[1]_1,		= 	[w^T[1]_1 * x + b[1]_1,		
+ 	 	 z[1]_2,		 w^T[1]_2,	 	 x_2,		 b[1]_2,			 w^T[1]_2 * x + b[1]_2,
+ 	 	 z[1]_3,		 w^T[1]_3,	 	 x_3]		 b[1]_3,			 w^T[1]_3 * x + b[1]_3,
+ 	 	 z[1]_4]	 	 w^T[1]_4]					 b[1]_4]			 w^T[1]_4 * x + b[1]_4]
+
+vectorizing the linear equations(2, 4, 6, 8)
+applying the sigmoid function element-wisely to z[1] will produce a row vector of shape(r,1)
+		(r[1],1)
+		(4,1)
+a[1] = [a[1]_1,
+		a[1]_2,
+		a[1]_3,
+		a[1]_4]
+		
+for the output layer:
+the output layer has the parameter w[2] of shape (1,4) and b of shape (1,1)
+(r[2],1)   (r[2],r[1])  (r[1],1) + (r[2],1)
+(1,1)  		(1,4)  		(4,1) 	 + (1,1)
+z[2] = 		W[2] 	* 	 a[1]    +  b[2]
+
+(r[2],1)    (r[2],1)
+(1,1)		(1,1)
+a[2]	= sigmoid(z[2])
+```
+
+remember from the previous section that we indicated x as a[0] vector so that, this notation can substitute x in our equations
