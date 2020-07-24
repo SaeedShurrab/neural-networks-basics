@@ -183,3 +183,335 @@ W[1] * X  = will results in a matrix that contains the Z values stacked as colum
 = [z[1]_1 z[1]_2 z[1]_m] = Z[1]
 ```
 
+
+
+### Activation Functions
+
+#### Activation functions other than sigmoid
+
+up to the moment, we have been using sigmoid as an activation for our neural network. sigmoid is good choice to regularize the data to be between (0 and 1), however, in some cases sigmoid may not work properly for your model so that other activation functions are required. there several activation functions other than sigmoid but those which proved to to give a good performance are:
+
+1- Tanh 
+
+2- Rectified Liner unit (ReLU) and leaky Rectified Linear Unit (LRelu)
+
+lets deep diver into each of them:
+
+```
+Tanh Function : the tanh function regularize its input to be between (-1 and 1) according to
+the following formula 
+a = tanh(z) = (e^z - e^-z)/(e^z + e^-z)
+tanh function is actuall a shifted and scaled version of the sigmoid function
+
+using tanh as an activation for the hidden unit improve the pefformance of the network hhan
+using the sigmoid function as its output lies between 1 and -1 and thus the mean of the activation is closer to haveng 0 value which in turn make it easier for the next layer to
+learn. one more thing to note that tanh is prefred t be used in the hidden units but not the
+output unit as it produce values between (-1 and 1) where you have to set the output activation according to the class label values in your data (sigmoid for binary class, softmax for n class)
+```
+
+in our implementations, we would refer to the activation as g[i] where g represents the activation and [i] is represents the layer it refers to .
+
+on of the down side of both sigmoid and tanh functions  if z is very large or small value, the derivative  of the function comes closer to zero and thus the gradient descent becomes slower in learning. so that, the other choice is the ReLU function
+
+```
+ReLue function: regularize the deriveative between 0 and z according to the following formula
+g = max(0,z) 
+so the derivative is 1 so long as z is positive and zero if z is negative. however in implemantation when z is exactly 0 the derivative is not defined but when it is implemneted in computeer you get 0.000000000000000000 very small, in practice you can pretend the
+derivative when z iz 0 that the derivative is equal 1 or 0 and your work will be fine. this is due to the fact ReLU is not diffrentiable at 0
+on disadvantage of ReLU is that the derivative is equal to 0 when z is negative but there is another version of ReLU is called Leaky ReLU which modify the original function when z is negative by slighting the slope in the neagtive side
+
+tha advantage of bot ReLU and LReLU for most of the space of z is the derivative of the activation is very different from 0 which in turn makes the learning faster
+```
+
+rule of thumb for selecting activation functions:
+
+1- if the output is (0,1) >>>>>sigmoid
+
+2- ReLU is a good choice for the hidden layer
+
+![Screenshot from 2020-07-23 09-36-33](/home/sa3eed/Pictures/Screenshot from 2020-07-23 09-36-33.png)
+
+​																							figure (4) activation functions graphical representation
+
+
+
+### Why do we need a non-linear activation functions?
+
+#### Explanation
+
+given X:
+
+```
+z[1] =W[1]^T * x + b[1]		(1)
+a[1] = g[1](z[1])			(2)
+z[2] =W[2]^T * a[1] + b[2]	(3)
+a[2] = g[2](z[2])			(4)
+
+suppose in function 2 we get rid of the activation functtion an set a[1] = z[1] or alternatively
+g(z) = z (linear activation function or identity activation fynction) beacuase it outputs
+the same valu of its input.
+and tha same is performed for a[2]
+
+then y-hat willend up computing a linear function, lets dive deeper:
+a[1] = z[1] = w[1] * x +b[1]		(5)
+a[2] = z[2] = w[2] * a[1] +b2		(6)
+the 5 into 6 we end up with:
+a[2] = w[2] (w[1] * x +b[1]) +b[2]
+by simplification:
+= (w[2] * w[1]) * x + (w[2] * b[1] +b[2])
+= w~ * x + b~
+
+and thus using linear activation function will end up uotputting a linear function of the
+input even in case of many hidden neural networks, such neural network with linear
+activation function is useless beacuase it will end up with a linear function.
+
+there is just one place where you might use a linear activation function when you are doing a machine learning on the regression problem, so if y is  areal number you can use a linear activation function on the output layer but not the hidden layer which can be any other
+choice (sig, tanh, ReLU)
+```
+
+
+
+### Derivative of the Activation Functions
+
+#### Sigmoid activation function
+
+```
+g(z) = 1/1+e^-z
+the slope = d/dz g(z) 
+from the previous week we know that:
+d/dz g(z)  = g(z)(1-g(z)) try to check it yourself
+lets check it 
+if z is very large say 10:
+g(z) ~= 1
+d/dz g(z) ~= 1*(1-1) ~= 0
+ 
+if z is very small say -10:
+g(z) ~= 0
+d/dz g(z) ~= 0*(1-0) ~= 0
+ 
+if z is 0:
+g(z) = 0.5
+d/dz g(z) ~= 0.5*(1-0.5) ~= 0.25
+```
+
+
+
+#### Tanh activation function
+
+```
+g(z) = (e^z - e^-z)/(e^z + e^-z)
+the slope = d/dz g(z) 
+by calculas :
+d/dz g(z) = 1 - (g(z))^2
+follow this link for detailed tanh deriveaton:
+https://blogs.cuit.columbia.edu/zp2130/derivative_of_tanh_function/
+lets check it
+
+if z is very large say 10:
+g(z) ~= 1
+d/dz g(z) ~= 1 - (1)^2 ~= 0
+ 
+if z is very small say -10:
+g(z) ~= -1
+d/dz g(z) ~= 1- (-1)^2  ~= 0
+ 
+if z is 0:
+g(z) = 0
+d/dz g(z) ~=  1 - 0 ~= 1
+```
+
+
+
+#### ReLU and LReLU
+
+```
+ReLU
+g(z) = max(0,z)
+the slope = d/dz g(z) 
+by calculas :
+0 if z < 0
+1 if z > 0
+undifined if z = 0
+
+-------------------------------------------
+LReLU
+g(z) = max(0.01z,z)
+the slope = d/dz g(z) 
+by calculas :
+0.01 if z < 0
+1 if z > 0
+undifined if z = 0
+
+```
+
+
+
+### Gradient Descent for Neural Networks
+
+#### Gradient descent implementation
+
+```
+for shallow neural network we have the folloing:
+r[0] = the number of input features = nx
+r[1] = the number of hidden units 
+r[2] = the number of output unit = 1
+w[1]: the hidden layer weight matrix which is of shape (r[1],r[0])
+b[1]: the hidden layer bias vector which is of shape (r[1],1)
+w[2]: the output layer weight matrix which is of shape (r[2],r[1])
+b[2]: the output layer bias vector which is of shape (r[2],1)
+
+the cost function is: 
+J(w[1],b[1],w[2],b[2]) =(-1/m) * sum_i_to_m(L(y-hat,y))
+
+to implement the gradient descent algorithm:
+1-initialize the weight matrices randomly
+repeat:
+2- compute (y-hat^(i)) for all training examples
+3- compyte the derivatives:
+dw[1] = dj/dw[1]
+db[1] = dj/db[1]
+dw[2] = dj/dw[2]
+db[2] = dj/db[2]
+4- udate the weights:
+w[1] = w[1] - alpha * dw[1]
+b[1] = b[1] - alpha * db[1]
+w[2] = w[2] - alpha * dw[2]
+b[2] = b[2] - alpha * db[2]
+
+to implement the gradient descent algorithm we need the following equations but first lets 
+remember the forward propagation equations:
+forward propagation:
+Z[1] =W[1]^T * x + b[1]			(1)
+A[1] = g[1](Z[1])				(2)
+Z[2] =W[2] * A[1]^T + b[2]		(3)
+A[2] = g[2](Z[2])				(4)
+
+dZ[2] = A[2] -Y					(5)
+dw[2] = (1/m) * A[1] * dz[2]^T	(6)
+db[2] = (1/m) * np.sum(dz[2],axis =1, keepdims = True)	(7)
+
+dZ[1] = (w[2]^T * dZ[2]) x g[1](z[1])	 		(8)
+		(r[1],m)* 			(r[1],m)
+(x) her stand for element-wise product
+dw[1] = (1/m) * X^T * dz[1]	(9)
+db[1] = (1/m) * np.sum(dz[1],axis =1, keepdims = True)	(10)
+```
+
+
+
+### Back-propagation Intuition 
+
+#### Neural network gradients 
+
+![Screenshot from 2020-07-24 08-13-15](/home/sa3eed/Pictures/Screenshot from 2020-07-24 08-13-15.png)
+
+​																						Figure(5): Shallow neural network computational graph
+
+ to derive th back propagation equations, as shown in figure 5 we have to derive back through the neural network  with respect  w[2], b[2], w[1] and b[1]. the process is quite similar  to what we have already done in logistic regression but this time in two step rather than one step as we have 2 layers, lets go through:
+
+```
+in order to update the weights of our neural network we have to find:
+for the output layer: dl/da[2], dl/dz[2] dl/dw[2], dl/db[2]
+remmber that from logistic regression :
+dl/dw[2] = (dl/da[2]) * (da[2]/dz[2]) * (dz[2]/dw[2])		
+dl/db[2] = (dl/da[2]) * (da[2]/dz[2]) * (dz[2]/db[2])
+and
+dl/da[2] = ((a[2]-y)/a[2](1-a[2]))
+da[2]/dz[2] = a[2](1-a[2])  
+and 
+dl/dz[2] = (dl/da[2]) * (da[2]/dz[2])
+         = ((a[2]-y)/a[2](1-a[2])) * a[2](1-a[2]) = (a[2] -y)
+dl/dw[2] = (a[2] -y) * a[1]^T = dz[2] * a[2]^T
+dl/db[2] =dz[2]
+all these derivatives are the same of what we have performed in logistic regression
+
+for the hidden layer: dl/da[1], dl/dz[1] dl/dw[1], dl/db[1]
+dl/da[1] = (dl/da[2]) * (da[2]/dz[2]) * dz[2]/da[1]
+dz[2]/da[1] = w[2]
+dl/da[1] = ((a[2]-y)/a[2](1-a[2])) * a[2](1-a[2])  * w[2]
+		 = (a[2] - y) * w[2] = dz[2]* w[2]^T
+dl/dz[1] = (dl/da[2]) * (da[2]/dz[2]) * dz[2]/da[1] * da[1]/dz[1]
+		 =  dz[2]* w[2]^T x g[1]~(z[1])
+g[1](z[1]) replaces a[1] which can be any activation function you select, so it derivative
+is g~
+ultimately:
+dw[1] = dz[1] * x^T
+db[1] = dz[1]
+
+```
+
+
+
+up to the moment, all these computations are considered for a single training example, let's have a look how to vectorize them for m training example by considering that all calculations we perform are in matrix form:
+
+```
+dZ[2] = A[2] - Y
+dW[2] = (1/m) * dZ[2] * A[1]^T
+db[2] = (1/m) * np.sum(dZ[2], axis = 1. keepdims= True)
+
+dZ[1] = W[2]^T * dZ[2] x g~[1](Z[]1) 
+dW[1] = (1/m) * dZ[1] * X^T
+db[1] = (1/m) * np.sum(dZ[1], axis = 1. keepdims= True)
+```
+
+ 
+
+### Random Initialization
+
+#### What happens if you initialize weights to zero?
+
+![Screenshot from 2020-07-24 10-32-30](/home/sa3eed/Pictures/Screenshot from 2020-07-24 10-32-30.png)
+
+​													      		Figure (6): simple neural network
+
+
+
+assume we have a simple neural network as shown in figure (6) with two input features and two units in the hidden layer and single unit in the output unit, let's see what happens if we initialize the weights to zeros :
+
+```
+we have:
+r[0] =2 , r[1] = 2 , r[2] = 1
+if we initilize with 0 we will have:
+w[1] = [0 0
+		0 0]
+b[1] = [0
+		0]
+w[2] = [0 0]
+for any ecample you feed int the neural network, you will have:
+a[1]_1 = a[1]_2 becuase both units are computing the same values
+
+when computing the packpropagation
+dz[1]_1 = dz[1]_2
+and 
+dw[1] = [u v
+	  	 u v]
+when you update the weights 
+w[1] = w[1] alpha * dw[1] 
+then you will have a symetric matrix where the first row = the second row
+and thus after many iteration wil still compute the same function as we have just a single unit in the hidden layer
+
+
+```
+
+
+
+#### Random initialization
+
+```
+to overcome such issue, wee need to randomly initialize the weights 
+W[1] = np.random.randn((r[i],r[j])) * 0.01
+moltiplication by 0.01 is just to have smaller random values as larger values may affect the learning process and make it a bit smaller 
+b[1] = np.zeros(r[i],1)
+there is no problem to initilaize b[1] with zeros as long as w[1] is initialized randomly
+w[2] = np.random.randn((r[i],r[j])) * 0.01
+b[1] = np.zeros(r[j],1)
+```
+
+
+
+
+
+
+
+
+
