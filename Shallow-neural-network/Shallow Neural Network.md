@@ -147,7 +147,7 @@ recall that X is a matrix of training examples stacked as columns with shape of 
 X = [x_1, x_2, ......x_m ]
 to vectorize the above for loop we have to compute:
 
-Z[1] = W[1] * X +b[1]
+Z[1] = W[1] * X + b[1]
 A[1] = sigmod(Z[1])
 Z[2] = W[2] * A[1] +b[2]
 A[2] = sigmod(Z[2])
@@ -446,10 +446,10 @@ up to the moment, all these computations are considered for a single training ex
 
 ```
 dZ[2] = A[2] - Y
-dW[2] = (1/m) * dZ[2] * A[1]^T
+dW[2] = (1/m) * np.dot(dZ[2], A[1]^T)
 db[2] = (1/m) * np.sum(dZ[2], axis = 1. keepdims= True)
 
-dZ[1] = W[2]^T * dZ[2] x g~[1](Z[]1) 
+dZ[1] = W[2]^T * dZ[2] x g~[1](Z[1]) 
 dW[1] = (1/m) * dZ[1] * X^T
 db[1] = (1/m) * np.sum(dZ[1], axis = 1. keepdims= True)
 ```
