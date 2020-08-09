@@ -204,9 +204,11 @@ a = tanh(z) = (e^z - e^-z)/(e^z + e^-z)
 tanh function is actuall a shifted and scaled version of the sigmoid function
 
 using tanh as an activation for the hidden unit improve the pefformance of the network hhan
-using the sigmoid function as its output lies between 1 and -1 and thus the mean of the activation is closer to haveng 0 value which in turn make it easier for the next layer to
+using the sigmoid function as its output lies between 1 and -1 and thus the mean of the activation is closer to haveng 
+0 value which in turn make it easier for the next layer to
 learn. one more thing to note that tanh is prefred t be used in the hidden units but not the
-output unit as it produce values between (-1 and 1) where you have to set the output activation according to the class label values in your data (sigmoid for binary class, softmax for n class)
+output unit as it produce values between (-1 and 1) where you have to set the output activation according to the class 
+label values in your data (sigmoid for binary class, softmax for n class)
 ```
 
 in our implementations, we would refer to the activation as g[i] where g represents the activation and [i] is represents the layer it refers to .
@@ -216,7 +218,8 @@ on of the down side of both sigmoid and tanh functions  if z is very large or sm
 ```
 ReLue function: regularize the deriveative between 0 and z according to the following formula
 g = max(0,z) 
-so the derivative is 1 so long as z is positive and zero if z is negative. however in implemantation when z is exactly 0 the derivative is not defined but when it is implemneted in computeer you get 0.000000000000000000 very small, in practice you can pretend the
+so the derivative is 1 so long as z is positive and zero if z is negative. however in implemantation when z is
+exactly 0 the derivative is not defined but when it is implemneted in computeer you get 0.000000000000000000 very small, in practice you can pretend the
 derivative when z iz 0 that the derivative is equal 1 or 0 and your work will be fine. this is due to the fact ReLU is not diffrentiable at 0
 on disadvantage of ReLU is that the derivative is equal to 0 when z is negative but there is another version of ReLU is called Leaky ReLU which modify the original function when z is negative by slighting the slope in the neagtive side
 
@@ -265,7 +268,8 @@ and thus using linear activation function will end up uotputting a linear functi
 input even in case of many hidden neural networks, such neural network with linear
 activation function is useless beacuase it will end up with a linear function.
 
-there is just one place where you might use a linear activation function when you are doing a machine learning on the regression problem, so if y is  areal number you can use a linear activation function on the output layer but not the hidden layer which can be any other
+there is just one place where you might use a linear activation function when you are doing a machine learning on the regression
+problem, so if y is  areal number you can use a linear activation function on the output layer but not the hidden layer which can be any other
 choice (sig, tanh, ReLU)
 ```
 
