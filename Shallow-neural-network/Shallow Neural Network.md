@@ -8,7 +8,7 @@
 
 as we saw in th last week in logistic regression model  which is built out of single sigmoid unit as where you input the the feature x as well as the parameters  w and b compute the linear combination Z and the apply the sigmoid function to Z and ultimately find loss between the prediction and the actual value as shown in figure (1):
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig1.png)
+![](../assets/2fig1.png)
 
 ​																										figure (1): neural network overview
 
@@ -24,7 +24,7 @@ each unit in the network is responsible for performing two steps of calculations
 
 #### what do the part of neural network mean?
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig2.png)
+![](../assets/2fig2.png)
 
 ​																											figure (2): neural network representation
 
@@ -44,7 +44,7 @@ on more thing to mention is that the hidden and the output layers will have para
 
 #### The neural network basic computation
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig3.png)
+![](../assets/2fig3.png)
 
 ​																			       	figure (3): What is going on inside the neural network??
 
@@ -229,7 +229,7 @@ rule of thumb for selecting activation functions:
 
 2- ReLU is a good choice for the hidden layer
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig4.png)
+![](../assets/2fig4.png)
 
 ​																							figure (4) activation functions graphical representation
 
@@ -403,7 +403,7 @@ db[1] = (1/m) * np.sum(dz[1],axis =1, keepdims = True)	(10)
 
 #### Neural network gradients 
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig5.png)
+![](../assets/2fig5.png)
 
 ​																						Figure(5): Shallow neural network computational graph
 
@@ -460,7 +460,7 @@ db[1] = (1/m) * np.sum(dZ[1], axis = 1. keepdims= True)
 
 #### What happens if you initialize weights to zero?
 
-![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig6.png)
+![](../assets/2fig6.png)
 
 ​													                                      		Figure (6): simple neural network
 
