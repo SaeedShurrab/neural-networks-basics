@@ -261,7 +261,7 @@ v = a +u
 j =3v
 ```
 
-![Screenshot from 2020-06-29 09-43-23](/home/sa3eed/Pictures/Screenshot from 2020-06-29 09-43-23.png)
+![](../assets/1fig1.png)
 
 ​                                            figure(1): Equation representation by computational graph.
 
@@ -350,7 +350,7 @@ L(a,y) = -(ylog(a)+(1-y)log(1-a))
 
 assume we have a training example with just two input feature x_1 and x_2 . and thus to compute (z) we need a parameter (w) for each input feature as follow w_1 and w_2 for x_1 and x_2 respectively as well as a bias parameter (b). to perform the gradient descent algorithm, we will represents the equations as a computation graph to as shown in figure(2)
 
- ![Screenshot from 2020-06-30 09-20-56](/home/sa3eed/Pictures/Screenshot from 2020-06-30 09-20-56.png)
+![](../assets/1fig2.png)
 
 ​											Figure(2): Logistic regression computational graph
 
@@ -770,88 +770,3 @@ j(w,b) = (-1/m) * (-sum_i=0_m(L(y-hat^i y^i)))
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Step by step sigmoid function derivation
-$$
-\begin{align}
-\dfrac{d}{dx} \sigma(x) &= \dfrac{d}{dx} \left[ \dfrac{1}{1 + e^{-x}} \right] \\
-&= \dfrac{d}{dx} \left( 1 + \mathrm{e}^{-x} \right)^{-1} \\
-&= -(1 + e^{-x})^{-2}(-e^{-x}) \\
-&= \dfrac{e^{-x}}{\left(1 + e^{-x}\right)^2} \\
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{e^{-x}}{1 + e^{-x}}  \\
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{(1 + e^{-x}) - 1}{1 + e^{-x}}  \\
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( \dfrac{1 + e^{-x}}{1 + e^{-x}} - \dfrac{1}{1 + e^{-x}} \right) \\
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( 1 - \dfrac{1}{1 + e^{-x}} \right) \\
-&= \sigma(x) \cdot (1 - \sigma(x))
-\end{align}
-$$
