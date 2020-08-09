@@ -8,7 +8,7 @@
 
 as we saw in th last week in logistic regression model  which is built out of single sigmoid unit as where you input the the feature x as well as the parameters  w and b compute the linear combination Z and the apply the sigmoid function to Z and ultimately find loss between the prediction and the actual value as shown in figure (1):
 
-![Screenshot from 2020-07-17 07-26-05](/home/sa3eed/Pictures/Screenshot from 2020-07-17 07-26-05.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig1.png)
 
 ​																										figure (1): neural network overview
 
@@ -24,7 +24,7 @@ each unit in the network is responsible for performing two steps of calculations
 
 #### what do the part of neural network mean?
 
-![Screenshot from 2020-07-17 08-21-43](/home/sa3eed/Pictures/Screenshot from 2020-07-17 08-21-43.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig2.png)
 
 ​																											figure (2): neural network representation
 
@@ -44,9 +44,9 @@ on more thing to mention is that the hidden and the output layers will have para
 
 #### The neural network basic computation
 
-![Screenshot from 2020-07-18 10-23-14](/home/sa3eed/Pictures/Screenshot from 2020-07-18 10-23-14.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig3.png)
 
-​																				figure (3): What is going on inside the neural network??
+​																			       	figure (3): What is going on inside the neural network??
 
 In Logistic regression (LHS of figure 3), each single unit performs two steps of calculations including:
 
@@ -229,7 +229,7 @@ rule of thumb for selecting activation functions:
 
 2- ReLU is a good choice for the hidden layer
 
-![Screenshot from 2020-07-23 09-36-33](/home/sa3eed/Pictures/Screenshot from 2020-07-23 09-36-33.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig4.png)
 
 ​																							figure (4) activation functions graphical representation
 
@@ -403,7 +403,7 @@ db[1] = (1/m) * np.sum(dz[1],axis =1, keepdims = True)	(10)
 
 #### Neural network gradients 
 
-![Screenshot from 2020-07-24 08-13-15](/home/sa3eed/Pictures/Screenshot from 2020-07-24 08-13-15.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig5.png)
 
 ​																						Figure(5): Shallow neural network computational graph
 
@@ -460,9 +460,9 @@ db[1] = (1/m) * np.sum(dZ[1], axis = 1. keepdims= True)
 
 #### What happens if you initialize weights to zero?
 
-![Screenshot from 2020-07-24 10-32-30](/home/sa3eed/Pictures/Screenshot from 2020-07-24 10-32-30.png)
+![](/home/sa3eed/Desktop/neural networks basics/aseets/2fig6.png)
 
-​													      		Figure (6): simple neural network
+​													                                      		Figure (6): simple neural network
 
 
 
