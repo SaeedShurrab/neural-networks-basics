@@ -49,7 +49,7 @@ z[1] = W[1] * x + b[1]
 a[1] = g[1](z[1])
 
 for the secon layer
-z[2] = W[1] * a[1] + b[2]
+z[2] = W[2] * a[1] + b[2]
 a[2] = g[2](z[2])
 
 for the third layer
@@ -135,7 +135,7 @@ z[4]      =       W[4]        *        a[3]    +     b[4]
 (1,1)     =      (1,3)        ,       (3,1)    ,        (1,1)
 
 as a general rule:
-W[l] dimension is: (r[l],r][l-1]) 
+W[l] dimension is: (r[l],r[l-1]) 
 b[l] dimension is: (r[l],1)
 z[l] dimension is: (r[l],1)
 a[l] dimension is: (r[l],1)
@@ -159,7 +159,7 @@ for the first layer we have:
 and
 Z[1]      =       W[1]        *        A[0]    +     b[1]
 (r[1],m)  =   (r[1],r[0])     ,      (r[0],m)  ,     (r[1],m)
-(5,50)     =      (5,3)        ,       (3,50)    ,        (5,50)
+(5,50)     =      (5,3)        ,       (3,50)    ,        (5,1)
 
 for the second layer we have:
 5 input features = r[1]
@@ -167,7 +167,7 @@ for the second layer we have:
 and
 Z[2]      =       W[2]        *        A[1]    +     b[2]
 (r[2],m)  =   (r[2],r[1])     ,      (r[1],m)  ,     (r[2],m)
-(5,50)     =      (5,5)        ,       (5,50)    ,        (5,50)
+(5,50)     =      (5,5)        ,       (5,50)    ,        (5,1)
 
 for the third layer we have:
 5 input features = r[2]
@@ -175,7 +175,7 @@ for the third layer we have:
 and
 Z[3]      =       W[3]        *        A[2]    +       b[3]
 (r[3],m)  =   (r[3],r[2])     ,      (r[2],m)  ,     (r[3],m)
-(3,50)     =      (3,5)        ,       (5,50)    ,        (3,50)
+(3,50)     =      (3,5)        ,       (5,50)    ,        (3,1)
 
 for the fourth layer we have:
 3 input features = r[3]
@@ -183,10 +183,10 @@ for the fourth layer we have:
 and
 Z[4]      =       W[4]        *        A[3]    +     b[4]
 (r[4],m)  =   (r[4],r[3])     ,      (r[3],m)  ,     (r[4],m)
-(1,50)     =      (1,3)        ,       (3,50)    ,        (1,50)
+(1,50)     =      (1,3)        ,       (3,50)    ,        (1,1)
 
 as a general rule:
-W[l] dimension is: (r[l],r][l-1]) 
+W[l] dimension is: (r[l],r[l-1]) 
 b[l] dimension is: (r[l],m)
 Z[l] dimension is: (r[l],m)
 A[l] dimension is  (n[l],m)
@@ -277,13 +277,13 @@ for a certain layer l we have:
 input: da[l]
 output: da[l-1], dW[l], db[l]
 for single training example :
-dz[l] = da[l] x g~[l](z[l])  = W[l+1]^T * dz[l+1] x g~[l](z[l]
+dz[l] = da[l] x g~[l](z[l])  = W[l+1]^T * dz[l+1] x g~[l](z[l])
 dW[l] = dz[l] * a[l-1]^T
 db[l] = dz[l]
 da[l-1] = W[l]^T * dz[l]
 
 the vectorized implementation:
-dZ[l] = dA[l] x g~[l](Z[l])  = W[l+1]^T * dZ[l+1] x g~[l](Z[l]
+dZ[l] = dA[l] x g~[l](Z[l])  = W[l+1]^T * dZ[l+1] x g~[l](Z[l])
 dW[l] = (1/m) * dZ[l] * A[l-1]^T
 db[l] =  (1/m) np.sum(dZ[l] * A[l-1]^T, axis = 1, keepdims =True)
 dA[l-1] = W[l]^T * dZ[l]
