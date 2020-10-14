@@ -41,7 +41,7 @@ def act_derivative(x, activation_type= 'sigmoid'):
 # Random data generation for function
 def data_generator(num_features=4, num_examples=1000,train_p=0.8):
     
-    dataset = np.random.randn(num_features,num_examples)
+    dataset = np.random.rand(num_features,num_examples)
     labels = np.random.randint(0,2,(1,num_examples))
     
     x_train = dataset[:,:int(num_examples * train_p)]
