@@ -16,6 +16,6 @@ the original material of this repository is taken from Andrew Ng course of neura
 
 ##### Improving Deep Neural Network: Hyperparameters Tuning, Regularization and Optimization.
 
-1.  Practical Aspects of Deep Learning [Under Progress].
-2. Optimization Algorithms [Planned].
-3. Hyperparameter tuning, Batch Normalization and Programming Frameworks [Planned]
+1.  Practical Aspects of Deep Learning [Completed].
+2. Optimization Algorithms [Completed].
+3. Hyperparameter tuning, Batch Normalization and Programming Frameworks [Under Progress]
